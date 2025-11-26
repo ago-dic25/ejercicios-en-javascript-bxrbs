@@ -1,51 +1,69 @@
-var alumnos = [
-    "Carlos Manuel",
-    "Cesar Oziel",
-    "Regina",
-    "Diego Leonardo",
-    "Andrea Carolina",
-    "Mayela Mayté",
-    "Eder Abraham",
-    "Diego Alonso",
-    "Naomi Michelle",
-    "Eder Abisai",
-    "Regina", //Dariela
-    "Carlos", //Manuel
-    "Carlos" //Alejandro
-,];
+let lista = document.querySelector(".lista");
+let filtroAlumnos = document.querySelector("#filtroAlumnos");
+let btnBuscar = document.querySelector("#btnBuscar");
+let btnLimpiar = document.querySelector("#btnLimpiar");
 
-//elimina el ultimo elemento del arreglo
-alumnos.pop();
+var alumnos = [{
+    id: 1,
+    nombre: "Barbara Rossana",
+    apellidoPaterno: "Perez",
+    apellidoMaterno: "Silva",
+    pelicula: "Interview with the Vampire"
+},{
+    id: 2,
+    nombre: "Karla Sarahí",
+    apellidoPaterno: "Cantú",
+    apellidoMaterno: "Barcenas",
+    pelicula: "Cars"
+},{
+    id: 3,
+    nombre: "Valeria",
+    apellidoPaterno: "Ybarra",
+    apellidoMaterno: "López",
+    pelicula: "Eyes Wide Shut"
+},{
+    id: 4,
+    nombre: "Carlos Oswaldo",
+    apellidoPaterno: "González",
+    apellidoMaterno: "Garza",
+    pelicula: "Anora"
+},{
+    id: 5,
+    nombre: "Ruperta",
+    apellidoPaterno: "Bernal",
+    apellidoMaterno: "Silva",
+    pelicula: "Bugonia"
+}]
 
-//Agregar 
-alumnos.push("Edgar Aurelio");
+document.addEventListener("DOMContentLoaded", function(){
+    alumnos.forEach(function(alumno){
+        let li = document.createElement("li");
+        li.innerHTML = `<span> ${alumno.nombre} ${alumno.apellidoPaterno} ${alumno.apellidoMaterno}</span><strong> ${alumno.pelicula}</strong>`;
+        lista.appendChild(li)
+    });
 
-//elimina al inicio
-alumnos.shift();
+    btnBuscar.addEventListener("click", function(){
+        let filtro = filtroAlumnos.value.toLowerCase();
+        lista.innerHTML = "";
+        let alumnosFiltrados = alumnos.filter(function(alumno){
+            return  alumno.nombre.toLowerCase().includes(filtro) ||
+                    alumno.apellidoPaterno.toLowerCase().includes(filtro) ||
+                    alumno.apellidoMaterno.toLowerCase().includes(filtro);
+        });
+        alumnosFiltrados.forEach(function(alumno){
+            let li = document.createElement("li");
+            li.innerHTML = `<span> ${alumno.nombre} ${alumno.apellidoPaterno} ${alumno.apellidoMaterno}</span><strong> ${alumno.pelicula}</strong>`;
+            lista.appendChild(li);
+        });
+    });
 
-//Agrega al inicio
-alumnos.unshift("Axel Gabriel");
-
-//Cambia valor de elemento
-alumnos[4]=  "Carlos Manuel";
-
-
-console.log(alumnos.indexOf("Eder Abisai"));
-console.log(alumnos.includes("Alejandro"));
-
-console.log(alumnos.find(nombre => nombre == "Regina"));
-//Equivale a 
-// for(var i = 0; i <alumnos.length; i++){
-//     if(alumnos[i] == "Regina"){
-//         console.log(alumnos[i]);
-//         break;
-//     }
-// }
-
-console.log(alumnos.findIndex(nombre => nombre=="Regina"));
-// for(var j= 0; j < alumnos.length; j++){
-//     if(alumnos[j] == "Regina"){
-//         console.log(j);
-//         break;
-//     }
-// }
+    btnLimpiar.addEventListener("click", function(){
+        filtroAlumnos.value = "";
+        lista.innerHTML = "";
+        alumnos.forEach(function(alumno){
+            let li = document.createElement("li");
+            li.innerHTML = `<span> ${alumno.nombre} ${alumno.apellidoPaterno} ${alumno.apellidoMaterno}</span><strong> ${alumno.pelicula}</strong>`;
+            lista.appendChild(li);
+        });
+    });
+});
