@@ -2,6 +2,19 @@ let lista = document.querySelector(".lista");
 let filtroAlumnos = document.querySelector("#filtroAlumnos");
 let btnBuscar = document.querySelector("#btnBuscar");
 let btnLimpiar = document.querySelector("#btnLimpiar");
+let btnAZ = document.querySelector("#btnAZ");
+let btnZA = document.querySelector("#btnZA");
+
+function mostrarLista(arr) {
+    lista.innerHTML = "";
+    arr.forEach(function(alumno){
+        let li = document.createElement("li");
+        li.innerHTML = `<span>${alumno.nombre} ${alumno.apellidoPaterno} ${alumno.apellidoMaterno}</span>
+                        <strong>${alumno.pelicula}</strong>`;
+        lista.appendChild(li);
+    });
+}
+
 
 var alumnos = [{
     id: 1,
@@ -66,4 +79,25 @@ document.addEventListener("DOMContentLoaded", function(){
             lista.appendChild(li);
         });
     });
+
+    btnAZ.addEventListener("click", function(){
+        let copia = [...alumnos];
+        copia.sort(function(a, b){
+            let nombreA = (a.nombre + " " + a.apellidoPaterno + " " + a.apellidoMaterno).toLowerCase();
+            let nombreB = (b.nombre + " " + b.apellidoPaterno + " " + b.apellidoMaterno).toLowerCase();
+            return nombreA.localeCompare(nombreB);
+        });
+        mostrarLista(copia);
+    });
+
+    btnZA.addEventListener("click", function(){
+        let copia = [...alumnos];
+        copia.sort(function(a, b){
+            let nombreA = (a.nombre + " " + a.apellidoPaterno + " " + a.apellidoMaterno).toLowerCase();
+            let nombreB = (b.nombre + " " + b.apellidoPaterno + " " + b.apellidoMaterno).toLowerCase();
+            return nombreB.localeCompare(nombreA);
+        });
+        mostrarLista(copia);
+    });
+
 });
